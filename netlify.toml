@@ -1,0 +1,22 @@
+# Netlify config — Ministério Cura e Avivamento
+# Site estático (single-file HTML + babel-standalone). Sem build necessário.
+
+[build]
+  publish = "."
+  command = ""
+
+# Roteamento SPA: hash routing já garante navegação client-side.
+# Este redirect só serve para garantir 200 OK em qualquer rota.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Headers permissivos pra o babel-standalone funcionar
+# (CSP padrão do Netlify não bloqueia eval, mas deixamos explícito)
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
